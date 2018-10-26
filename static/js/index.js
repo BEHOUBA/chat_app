@@ -53,21 +53,21 @@ logForm.addEventListener('submit', e => {
 });
 
 
-function sendLogin() {
-    if(logName.value === "" || logPassword.value === ""){
-        alert("invalid input !!!");
-        return;
-    }
-    var logData = {
-        "email": logEmail.value,
-        "password": logPassword.value
-    }
+// function sendLogin() {
+//     if(logName.value === "" || logPassword.value === ""){
+//         alert("invalid input !!!");
+//         return;
+//     }
+//     var logData = {
+//         "email": logEmail.value,
+//         "password": logPassword.value
+//     }
 
-    axios.post("/login", logData)
-        .then(res => {
-            console.log(res)
-        })
-        .catch(err => {
-            console.log(err)
-        })
-}
+//     axios.post("/login", logData)
+//         .then(res => {
+//             console.log(res)
+//         })
+//         .catch(err => {
+//             console.log(err)
+//         })
+// }
