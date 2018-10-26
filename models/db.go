@@ -13,7 +13,7 @@ import (
 
 var GlobalSessions *session.Manager
 
-var Db *sql.DB
+var db *sql.DB
 var err error
 
 func init() {
@@ -27,7 +27,7 @@ func init() {
 	}
 	go GlobalSessions.GC()
 
-	Db, err = sql.Open("postgres", connStr)
+	db, err = sql.Open("postgres", connStr)
 	if err != nil {
 		log.Fatal(err)
 	}
