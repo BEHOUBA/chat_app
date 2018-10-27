@@ -2,12 +2,11 @@ let regName = document.getElementById("reg-name");
 let regEmail = document.getElementById("reg-email");
 let regPass1 = document.getElementById("reg-password1");
 let regPass2 = document.getElementById("reg-password2");
-
-
-let logForm = document.getElementById("login");
-let logEmail = document.getElementById("log-email");
-let logPassword = document.getElementById("log-password");
 let info = document.getElementById("info");
+
+
+
+
 
 
 
@@ -46,28 +45,3 @@ function sendRegistration(){
 }
 
 
-
-logForm.addEventListener('submit', e => {
-    e.preventDefault();
-    sendLogin();
-});
-
-
-// function sendLogin() {
-//     if(logName.value === "" || logPassword.value === ""){
-//         alert("invalid input !!!");
-//         return;
-//     }
-//     var logData = {
-//         "email": logEmail.value,
-//         "password": logPassword.value
-//     }
-
-//     axios.post("/login", logData)
-//         .then(res => {
-//             console.log(res)
-//         })
-//         .catch(err => {
-//             console.log(err)
-//         })
-// }

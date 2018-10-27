@@ -34,6 +34,29 @@ func (c *Login) Get() {
 }
 
 func (c *Login) Post() {
+	var user models.User
+	err := json.Unmarshal(c.Ctx.Input.RequestBody, &user)
+	if err != nil {
+		// log.Println(err)
+		c.Abort("500")
+	}
+
+	if err := user.Login(); err != nil {
+		// log.Println(err)
+		switch err.Error() {
+		case "sql: no rows in result set":
+			c.Abort("401")
+			break
+		case "crypto/bcrypt: hashedPassword is not the hash of the given password":
+			c.Abort("400")
+			break
+		default:
+			c.Abort("500")
+			break
+		}
+	}
+	c.SetSession("session", "authenticated")
+	c.ServeJSON()
 }
 
 type Register struct {

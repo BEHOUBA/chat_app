@@ -31,3 +31,22 @@ func (u *User) Register() (err error) {
 	}
 	return
 }
+
+func (u *User) Login() (err error) {
+	var userFromDB User
+	if u.Email == "" || u.Password == "" {
+		err = errors.New("invalid user login's data")
+		return
+	}
+	row := db.QueryRow("SELECT name, email, password FROM users WHERE email=$1", u.Email)
+
+	err = row.Scan(&userFromDB.Name, &userFromDB.Email, &userFromDB.Password)
+	if err != nil {
+		return
+	}
+	err = bcrypt.CompareHashAndPassword([]byte(userFromDB.Password), []byte(u.Password))
+	if err != nil {
+		return
+	}
+	return
+}
