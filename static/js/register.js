@@ -33,13 +33,13 @@ function sendRegistration(){
         .catch(err => {
             switch (err.response.status){
                 case 400:
-                info.innerText = "Donnee fourni incorrect verifiez que vous avez fournis des informations correctes";
+                info.innerHTML = "<p class='danger'>Donnees fourni invalid";
                 break;
                 case 409:
-                info.innerText = "Compte existe deja merci de vous connecter";
+                info.innerHTML = "<p class='danger'>Compte existe deja merci de vous connecter</p> <a href='/login'>Login</a>";
                 break;
                 default:
-                info.innerText = "error interne serveur"
+                info.innerText = "<p class='danger'>error interne serveur</p>"
             }
         })
 }

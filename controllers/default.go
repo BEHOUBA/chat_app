@@ -18,6 +18,7 @@ type MainController struct {
 }
 
 func (c *MainController) Get() {
+	c.Data["isAuth"] = c.GetSession("session")
 	c.TplName = "index.html"
 }
 

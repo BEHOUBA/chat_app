@@ -10,8 +10,13 @@
 </head>
 <body>
   <h1 class="center">Welcome on chic-chat</h1>
-  <a href="/login">Login and chat with your friends</a>
-  <a href="/register">Register and chat with others peoples</a>
+  {{ if .isAuth }}
+  <p class="success">Vous etes connecte</p>
   <a href="/logout">Logout</a>
+  {{ else }}
+  <p class="danger">Vous n'etes pas connecte</p>
+  <a href="/login">Login and chat with your friends</a><br>
+  <a href="/register">Register and chat with others peoples</a><br>
+  {{ end }}
 </body>
 </html>
