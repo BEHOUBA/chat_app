@@ -19,6 +19,7 @@ type MainController struct {
 
 func (c *MainController) Get() {
 	c.Data["isAuth"] = c.GetSession("session")
+	log.Println(c.GetSession("session"))
 	c.TplName = "index.html"
 }
 
@@ -56,7 +57,7 @@ func (c *Login) Post() {
 			break
 		}
 	}
-	c.SetSession("session", "authenticated")
+	c.SetSession("session", user.ID)
 	c.ServeJSON()
 }
 
@@ -102,7 +103,7 @@ func (c *Register) Post() {
 			c.Abort("500")
 		}
 	}
-	c.SetSession("session", "authenticated")
+	c.SetSession("session", user.ID)
 	c.ServeJSON()
 }
 

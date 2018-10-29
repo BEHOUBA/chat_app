@@ -10,6 +10,6 @@ func init() {
 	beego.Router("/login", &controllers.Login{})
 	beego.Router("/register", &controllers.Register{})
 	beego.Router("/logout", &controllers.Logout{})
-	// beego.Router("/chat-room", &controllers.ChatRoom{})
-	// beego.Router("/chat-room/join", &controllers.ChatRoom{}, "get:Join")
+	beego.Router("/room", &controllers.ChatRoom{})
+	beego.Router("/ws/chat", &controllers.ChatWebSocket{})
 }

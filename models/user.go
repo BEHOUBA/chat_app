@@ -3,13 +3,16 @@ package models
 import (
 	"errors"
 
+	"github.com/gorilla/websocket"
 	"golang.org/x/crypto/bcrypt"
 )
 
 type User struct {
-	Name     string `json:"name"`
-	Email    string `json:"email"`
-	Password string `json:"password"`
+	ID            int    `json:"id"`
+	Name          string `json:"name"`
+	Email         string `json:"email"`
+	Password      string `json:"password"`
+	WebsocketConn *websocket.Conn
 }
 
 // Register function check if user's data validity,
@@ -25,7 +28,7 @@ func (u *User) Register() (err error) {
 		return err
 	}
 	u.Password = string(cryptedPassword)
-	_, err = db.Exec("INSERT INTO users (name, email, password) VALUES ($1, $2, $3)", u.Name, u.Email, u.Password)
+	err = db.QueryRow("INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING user_id", u.Name, u.Email, u.Password).Scan(&u.ID)
 	if err != nil {
 		return err
 	}
@@ -38,13 +41,32 @@ func (u *User) Login() (err error) {
 		err = errors.New("invalid user login's data")
 		return
 	}
-	row := db.QueryRow("SELECT name, email, password FROM users WHERE email=$1", u.Email)
+	row := db.QueryRow("SELECT user_id, name, email, password FROM users WHERE email=$1", u.Email)
 
-	err = row.Scan(&userFromDB.Name, &userFromDB.Email, &userFromDB.Password)
+	err = row.Scan(&userFromDB.ID, &userFromDB.Name, &userFromDB.Email, &userFromDB.Password)
 	if err != nil {
 		return
 	}
 	err = bcrypt.CompareHashAndPassword([]byte(userFromDB.Password), []byte(u.Password))
+	if err != nil {
+		return
+	}
+	*u = userFromDB
+	return
+}
+
+func (u *User) GetDataFromDB(ID int) (err error) {
+	err = db.QueryRow("SELECT * FROM users WHERE user_id=$1", ID).Scan(&u.ID, &u.Name, &u.Email, &u.Password)
+	if err != nil {
+		return
+	}
+	return
+}
+
+func (u *User) Connect(conn *websocket.Conn, userID int) (err error) {
+	u.WebsocketConn = conn
+
+	err = u.GetDataFromDB(userID)
 	if err != nil {
 		return
 	}

@@ -8,8 +8,27 @@
 </head>
 <body>
     <p>CHAT ROOM</p>
+    <input type="text" placeholder="message" id="msg">
+    <input type="number" placeholder="receiver id" id="r_id">
+    <button onclick="sendMsg()">send msg</button>
 </body>
 <script>
-    var ws = new WebSocket("ws://localhost:8081/chat-room/join");
+    let ws = new WebSocket("ws://localhost:8081/ws/chat");
+
+
+    let msg = document.getElementById("msg");
+    let RId = document.getElementById("r_id");
+
+    ws.onmessage = function(e) {
+        console.log(e.data)
+    }
+    function sendMsg() {
+        console.log("message sent")
+        var data = {
+            "receiver_id":  Number(RId.value),
+            "body": msg.value,
+        }
+        ws.send(JSON.stringify(data))
+    }
 </script>
 </html>
