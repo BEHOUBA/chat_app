@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <p>CHAT WITH {{ .username }}</p>
+    <div id="messages">
+        {{ range .messages}}
+            <p>{{ .Body }} </p>
+            <!-- <p>{{ .Date }} </p>
+            <p>{{ .SenderID }} </p> -->
+        {{ end }}
+    </div>
+    <input type="text" placeholder="message" id="msg">
+    <button onclick="sendMsg()">send msg</button>
+</body>
+<script>
+    let RId = Number(location.href.split("/")[4])
+    let ws = new WebSocket("ws://localhost:8081/ws/chat");
+    let msg = document.getElementById("msg");
+    let messages = document.getElementById("messages");
+
+    ws.onmessage = function(e) {
+        console.log(e.data)
+        let jsonData = JSON.parse(e.data)
+        console.log(jsonData.sender_id)
+        if (jsonData.sender_id === Number(RId) || jsonData.receiver_id === Number(RId)) {
+            messages.innerHTML += `<p> ${jsonData.body}</p>`;
+        } else {
+            console.log("new message received...")
+        }
+    }
+    function sendMsg() {
+        console.log("message sent")
+        var data = {
+            "receiver_id":  RId,
+            "body": msg.value
+        }
+        ws.send(JSON.stringify(data))
+        msg.value = ""
+    }
+</script>
+</html>

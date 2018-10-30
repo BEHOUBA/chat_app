@@ -2,6 +2,7 @@ package models
 
 import (
 	"errors"
+	"log"
 
 	"github.com/gorilla/websocket"
 	"golang.org/x/crypto/bcrypt"
@@ -69,6 +70,40 @@ func (u *User) Connect(conn *websocket.Conn, userID int) (err error) {
 	err = u.GetDataFromDB(userID)
 	if err != nil {
 		return
+	}
+	return
+}
+
+func (u *User) GetChatMessages(receiver *User) (msg []Message, err error) {
+	rows, err := db.Query("SELECT sender_id ,message, createdat FROM messages WHERE (sender_id=$1 AND receiver_id=$2) OR (sender_id=$3 AND receiver_id=$4)", u.ID, receiver.ID, receiver.ID, u.ID)
+	if err != nil {
+		return
+	}
+	for rows.Next() {
+		var m Message
+		err := rows.Scan(&m.SenderID, &m.Body, &m.Date)
+		if err != nil {
+			log.Println(err)
+			continue
+		}
+		msg = append(msg, m)
+	}
+	return
+}
+
+func GetAllUsers(exclude int) (users []User, err error) {
+	rows, err := db.Query("SELECT user_id, name, email FROM users where user_id!=$1", exclude)
+	if err != nil {
+		return
+	}
+	for rows.Next() {
+		var u User
+		err := rows.Scan(&u.ID, &u.Name, &u.Email)
+		if err != nil {
+			log.Println(err)
+			continue
+		}
+		users = append(users, u)
 	}
 	return
 }

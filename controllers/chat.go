@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"log"
+	"strconv"
 
 	"github.com/behouba/chat_app/models"
 
@@ -20,16 +21,40 @@ type ChatRoom struct {
 	beego.Controller
 }
 
-func (this *ChatRoom) Get() {
-	// Safe check.
-	// uname := this.GetString("uname")
-	// if len(uname) == 0 {
-	// 	this.Redirect("/", 302)
-	// 	return
-	// }
+func (c *ChatRoom) Get() {
+	userID := c.GetSession("session").(int)
+	if userID == 0 {
+		c.Redirect("/", 303)
+		return
+	}
 
-	this.TplName = "chat-room.html"
-	this.Data["IsWebSocket"] = true
+	users, err := models.GetAllUsers(userID)
+	if err != nil {
+		log.Println(err)
+	}
+
+	c.Data["users"] = users
+	c.Data["IsWebSocket"] = true
+	c.TplName = "chat-room.html"
+}
+
+type Channel struct {
+	beego.Controller
+}
+
+func (c *Channel) Get() {
+	var sender, receiver models.User
+	sender.ID = c.GetSession("session").(int)
+	receiver.ID, _ = strconv.Atoi(c.Ctx.Input.Param(":id"))
+
+	messages, err := sender.GetChatMessages(&receiver)
+	if err != nil {
+		log.Println(err)
+	}
+	receiver.GetDataFromDB(receiver.ID)
+	c.Data["username"] = receiver.Name
+	c.Data["messages"] = messages
+	c.TplName = "channel.html"
 }
 
 type ChatWebSocket struct {
