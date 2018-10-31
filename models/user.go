@@ -4,26 +4,27 @@ import (
 	"errors"
 	"log"
 
-	"github.com/gorilla/websocket"
 	"golang.org/x/crypto/bcrypt"
 )
 
 type User struct {
-	ID            int    `json:"id"`
-	Name          string `json:"name"`
-	Email         string `json:"email"`
-	Password      string `json:"password"`
-	WebsocketConn *websocket.Conn
+	ID       int    `json:"id"`
+	Name     string `json:"name"`
+	Email    string `json:"email"`
+	Password string `json:"password"`
+	// WebsocketConn *websocket.Conn
+	// Connexions    []*websocket.Conn
 }
 
-// Register function check if user's data validity,
-// hash user's password and store user's data on database
 func (u *User) Register() (err error) {
+
+	// Register function check user's data validity,
 	if u.Name == "" || u.Email == "" || u.Password == "" {
 		err = errors.New("invalid user registration's data")
 		return err
 	}
 
+	// hash user's password and store user's data on database
 	cryptedPassword, err := bcrypt.GenerateFromPassword([]byte(u.Password), bcrypt.MinCost)
 	if err != nil {
 		return err
@@ -38,10 +39,12 @@ func (u *User) Register() (err error) {
 
 func (u *User) Login() (err error) {
 	var userFromDB User
+	// check for null values
 	if u.Email == "" || u.Password == "" {
 		err = errors.New("invalid user login's data")
 		return
 	}
+	// try to find user in database
 	row := db.QueryRow("SELECT user_id, name, email, password FROM users WHERE email=$1", u.Email)
 
 	err = row.Scan(&userFromDB.ID, &userFromDB.Name, &userFromDB.Email, &userFromDB.Password)
@@ -56,18 +59,9 @@ func (u *User) Login() (err error) {
 	return
 }
 
+// set empty user's fields from user id
 func (u *User) GetDataFromDB(ID int) (err error) {
 	err = db.QueryRow("SELECT * FROM users WHERE user_id=$1", ID).Scan(&u.ID, &u.Name, &u.Email, &u.Password)
-	if err != nil {
-		return
-	}
-	return
-}
-
-func (u *User) Connect(conn *websocket.Conn, userID int) (err error) {
-	u.WebsocketConn = conn
-
-	err = u.GetDataFromDB(userID)
 	if err != nil {
 		return
 	}

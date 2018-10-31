@@ -7,9 +7,27 @@ import (
 
 	"github.com/astaxie/beego"
 	"github.com/behouba/chat_app/models"
+	"github.com/gorilla/websocket"
 )
 
+func init() {
+	// ActiveUsersConn map initialisation
+	activeConn.ActiveUsersConn = make(map[int][]*websocket.Conn)
+
+	// requestion upgrader initialisation
+	// upgrader = websocket.Upgrader{
+	// 	ReadBufferSize:  1024,
+	// 	WriteBufferSize: 1024,
+	// }
+}
+
 var (
+	// slice for all users who are currently connected to websocket
+	activeConn models.Hub
+
+	// upgrader websocket.Upgrader
+
+	// email format validation regex
 	emailRegexp = regexp.MustCompile("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")
 )
 

@@ -6,11 +6,26 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
+<style>
+
+    .receiver{
+        text-align: left;
+        color: gray;
+    }
+    .sender{
+        text-align: right;
+        color: blue;
+    }
+</style>
 <body>
-    <p>CHAT WITH {{ .username }}</p>
+    <p>CHAT WITH {{ .receiver.Name }} {{ $receiverID := .receiver.ID}}</p>
     <div id="messages">
         {{ range .messages}}
-            <p>{{ .Body }} </p>
+            {{ if eq .SenderID  $receiverID}}
+            <p class="receiver">{{ .Body }} </p>
+            {{ else }}
+            <p class="sender">{{ .Body }} </p>
+            {{ end }}
             <!-- <p>{{ .Date }} </p>
             <p>{{ .SenderID }} </p> -->
         {{ end }}
@@ -19,29 +34,34 @@
     <button onclick="sendMsg()">send msg</button>
 </body>
 <script>
-    let RId = Number(location.href.split("/")[4])
+    let RId = Number(location.href.split("/")[4]);
     let ws = new WebSocket("ws://localhost:8081/ws/chat");
     let msg = document.getElementById("msg");
     let messages = document.getElementById("messages");
 
     ws.onmessage = function(e) {
         console.log(e.data)
-        let jsonData = JSON.parse(e.data)
-        console.log(jsonData.sender_id)
-        if (jsonData.sender_id === Number(RId) || jsonData.receiver_id === Number(RId)) {
-            messages.innerHTML += `<p> ${jsonData.body}</p>`;
+        let jsonData = JSON.parse(e.data);
+        console.log(jsonData.sender_id);
+        if (jsonData.sender_id === Number(RId)) {
+            messages.innerHTML += `<p class="receiver"> ${jsonData.body}</p>`;
+        } else if (jsonData.receiver_id === Number(RId)) {
+            messages.innerHTML += `<p class="sender"> ${jsonData.body}</p>`;
         } else {
-            console.log("new message received...")
+            console.log("new message received...");
         }
     }
     function sendMsg() {
-        console.log("message sent")
         var data = {
             "receiver_id":  RId,
             "body": msg.value
         }
-        ws.send(JSON.stringify(data))
-        msg.value = ""
+        if (ws.readyState === 1) {
+            ws.send(JSON.stringify(data));
+            msg.value = "";
+        } else {
+            alert("echec de connection, merci d'actualiser la page");
+        }
     }
 </script>
 </html>
