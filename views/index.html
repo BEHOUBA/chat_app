@@ -6,18 +6,37 @@
   <title>chat app</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" media="screen"/>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   <link rel="stylesheet" href="/static/css/index.css">
 </head>
 <body>
-  <h1 class="center">Welcome on chic-chat</h1>
-  {{ if .isAuth }}
-  <p class="success">Vous etes connecte</p>
-  <a href="/room">aller chatter</a><br>
-  <a href="/logout">Logout</a>
-  {{ else }}
-  <p class="danger">Vous n'etes pas connecte</p>
-  <a href="/login">Login and chat with your friends</a><br>
-  <a href="/register">Register and chat with others peoples</a><br>
-  {{ end }}
+    <div class="container">
+      <div class="col-md-10 mx-auto mt-5">
+          <h1 class="display-3 text-center">CHIC CHAT</h1>
+          <p class="text-center mt-5"> 
+            Welcome to the chit chat app application, a fast and reliable chat application build with love.
+          </p>
+          {{ if .isAuth }}
+          <div class="my-5 text-center">
+              <div class="alert alert-success" role="alert">
+                  Vous etes connecte / You are online
+              </div>
+              <a href="/room" class="btn btn-primary mt-3">Go to the chat / Aller au chat</a>
+              <a href="/logout" class="btn btn-primary mt-3">Logout / Se deconnecter</a>
+          </div>
+          {{ else }}
+          <div class="my-5 text-center">
+              <div class="alert alert-danger" role="alert">
+                  Vous n'etes pas connecte / You are not connected
+              </div>
+              <a href="/login" class="btn btn-primary mt-3">Login / Se connecter</a>
+              <a href="/register" class="btn btn-primary mt-3">Register / S'enregister</a>
+          </div>
+          {{ end }} 
+        </div>
+        <!-- <div class="position-static">
+          <p class="text-right">By K.B Manasse</p>
+        </div> -->
+      </div>
 </body>
 </html>

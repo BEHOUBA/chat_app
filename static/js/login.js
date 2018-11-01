@@ -14,7 +14,9 @@ logForm.addEventListener('submit', e => {
 
 function sendLogin() {
     if(logEmail.value === "" || logPassword.value === ""){
-        alert("invalid input !!!");
+        info.innerHTML = `<div class="alert alert-danger" role="alert">
+                            Invalid input !
+                        </div>`
         return;
     }
     var logData = {
@@ -32,13 +34,19 @@ function sendLogin() {
             console.log(err)
             switch (err.response.status){
                 case 401:
-                info.innerText = "Ce compte n'existe pas !";
+                info.innerHTML = `<div class="alert alert-danger" role="alert">
+                This user do not exist! / ce profil n'existe pas
+              </div>`;
                 break;
                 case 400:
-                info.innerText = "Mot de passe incorrect !";
+                info.innerHTML = `<div class="alert alert-danger" role="alert">
+                Wrong password ! / Mot de passe incorrect
+              </div>`;
                 break;
                 default:
-                info.innerText = "error interne serveur"
+                info.innerHTML = `<div class="alert alert-danger" role="alert">
+                Internal server error ! /  Error interne serveur !
+              </div>`
             }
         })
 }
