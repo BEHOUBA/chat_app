@@ -14,12 +14,12 @@
       <div class="col-md-10 mx-auto mt-5">
           <h1 class="display-3 text-center">CHIC CHAT</h1>
           <p class="text-center mt-5"> 
-            Welcome to the chit chat app application, a fast and reliable chat application build with love.
+            Welcome to the chit chat app application, a fast and reliable one-on-one chat application build with love.
           </p>
           {{ if .isAuth }}
           <div class="my-5 text-center">
               <div class="alert alert-success" role="alert">
-                  Vous etes connecte / You are online
+                  You are online / Vous etes connecte
               </div>
               <a href="/room" class="btn btn-primary mt-3">Go to the chat / Aller au chat</a>
               <a href="/logout" class="btn btn-primary mt-3">Logout / Se deconnecter</a>
@@ -27,7 +27,7 @@
           {{ else }}
           <div class="my-5 text-center">
               <div class="alert alert-danger" role="alert">
-                  Vous n'etes pas connecte / You are not connected
+                  You are not connected / Vous n'etes pas connecte
               </div>
               <a href="/login" class="btn btn-primary mt-3">Login / Se connecter</a>
               <a href="/register" class="btn btn-primary mt-3">Register / S'enregister</a>

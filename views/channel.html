@@ -5,55 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="/static/css/chat.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <title>Document</title>
 </head>
  
-<style>
 
-    .receiver{
-        text-align: left;
-        color: gray;
-    }
-    .sender{
-        text-align: right;
-        color: blue;
-    }
-
-    #messages{
-        list-style: none;
-        background: none;
-        margin: 0;
-        padding: 0 0 50px 0;
-        margin-top: 60px;
-        margin-bottom: 5px;
-    }
-
-    /* input.textarea{
-        position: fixed;
-        bottom: 0px;
-        left: 0px;
-        right: 0px;
-        width: 80%;
-        height: 50px;
-        z-index: 99;
-        background: #fafafa;
-        border: none;
-        outline: none;
-        margin: 0 50px;
-        padding-left: 55px;
-        padding-right: 55px;
-        color: #666;
-        font-weight: 400;
-    } */
-
-</style>
-<body>
+<body onload="channeLoaded()">
     <div class="container">
         <div class="col-md-10 mx-auto">
                 <nav class="navbar fixed-top navbar-light bg-light">
-                <a class="navbar-brand" href="/room"> BACK </a>
-                <a class="text-right" href="#">{{ .receiver.Name }} </a>
+                <a href="/room">
+                    <i class="fa fa-chevron-left"></i>
+                </a>
+                <a class="navbar-brand" href="#">{{ .receiver.Name }} </a>
                 <p>{{ $receiverID := .receiver.ID}}</p>
                 </nav>
                 <div id="messages">
@@ -67,6 +32,8 @@
                         <p>{{ .SenderID }} </p> -->
                     {{ end }}
                         </div>
+                        <form id="msg-form" action="">
+
                         <div class="fixed-bottom bg-light">
                             <div class="input-group my-3 col-md-10 mx-auto">
                                 <input type="text" placeholder="message" id="msg" class="textarea form-control" aria-describedby="button-addon2">
@@ -75,6 +42,8 @@
                                 </div>
                             </div>
                         </div>
+                    </form>
+
         </div>
     </div>
 </body>
@@ -82,6 +51,7 @@
     let RId = Number(location.href.split("/")[4]);
     let ws = new WebSocket("ws://localhost:8081/ws/chat");
     let msg = document.getElementById("msg");
+    let msgForm = document.getElementById("msg-form");
     let messages = document.getElementById("messages");
 
     ws.onmessage = function(e) {
@@ -98,6 +68,13 @@
             console.log("new message received...");
         }
     }
+
+
+    msgForm.addEventListener("submit", e => {
+        e.preventDefault()
+        sendMsg()
+    })
+
     function sendMsg() {
         if (msg.value == "") {
             return
@@ -112,6 +89,13 @@
         } else {
             alert("echec de connection, merci d'actualiser la page");
         }
+    }
+
+    function channeLoaded() {
+        console.log("hello locd")
+        setTimeout(() => {
+            window.scroll(0, document.body.scrollHeight);
+        }, 1);
     }
 </script>
 </html>

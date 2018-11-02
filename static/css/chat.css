@@ -1,1 +1,28 @@
 
+    .receiver{
+        text-align: left;
+        background: #e9ecef;
+        border-radius: 20px 20px 20px 0px;
+    }
+    .sender{
+        text-align: right;
+        background: #a0d6a9;
+        position: relative;
+        left: 20%;
+        border-radius: 20px 20px 0px 20px;
+    }
+
+    #messages{
+        list-style: none;
+        background: none;
+        margin: 0;
+        padding: 0 0 50px 0;
+        margin-top: 60px;
+        margin-bottom: 5px;
+    }
+
+#messages p{
+    padding: 10px 15px;
+    color: black;
+    width: 80%;
+}
