@@ -1,1 +1,1 @@
-"web: chic-chat"
+web: chat_app
