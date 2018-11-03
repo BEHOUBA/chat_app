@@ -1,1 +1,1 @@
-web: chat_app
+web: go build -o chat_app && ./chat_app
