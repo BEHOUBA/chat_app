@@ -9,10 +9,6 @@ import (
 )
 
 func main() {
-	// port, err := strconv.Atoi(os.Getenv("PORT"))
-	// if err == nil {
-	// 	beego.HttpPort = port
-	// }
 	beego.Run(getPort())
 }
 
