@@ -17,7 +17,7 @@ var db *sql.DB
 var err error
 
 func init() {
-	connStr := "postgresql://localhost/chat_app?user=postgres"
+	connStr := "postgres://txezbgusdiyzas:9dfe85b639ce49a0cce3e6bf6ee1f39de7d38090f3d3dfcc84364d4372511cf8@ec2-54-246-86-167.eu-west-1.compute.amazonaws.com:5432/dcut3u0egv6k8e"
 
 	dbConfig := session.ManagerConfig{CookieName: "gosessionid", Gclifetime: 3600, ProviderConfig: connStr}
 
