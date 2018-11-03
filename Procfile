@@ -1,1 +1,1 @@
-web: ./chat_app
+web: chat_app
