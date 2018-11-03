@@ -13,5 +13,12 @@ func main() {
 	// if err == nil {
 	// 	beego.HttpPort = port
 	// }
-	beego.Run(":" + os.Getenv("PORT"))
+	beego.Run(getPort())
+}
+
+func getPort() string {
+	if os.Getenv("PORT") != "" {
+		return ":" + os.Getenv("PORT")
+	}
+	return ""
 }
