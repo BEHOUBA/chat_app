@@ -1,0 +1,93 @@
+{
+	"ImportPath": "github.com/behouba/chat_app",
+	"GoVersion": "go1.10",
+	"GodepVersion": "v80",
+	"Deps": [
+		{
+			"ImportPath": "github.com/astaxie/beego",
+			"Comment": "v1.10.1-34-g833f54d",
+			"Rev": "833f54d818237272dffbb9f053227bebe0957ec7"
+		},
+		{
+			"ImportPath": "github.com/astaxie/beego/config",
+			"Comment": "v1.10.1-34-g833f54d",
+			"Rev": "833f54d818237272dffbb9f053227bebe0957ec7"
+		},
+		{
+			"ImportPath": "github.com/astaxie/beego/context",
+			"Comment": "v1.10.1-34-g833f54d",
+			"Rev": "833f54d818237272dffbb9f053227bebe0957ec7"
+		},
+		{
+			"ImportPath": "github.com/astaxie/beego/context/param",
+			"Comment": "v1.10.1-34-g833f54d",
+			"Rev": "833f54d818237272dffbb9f053227bebe0957ec7"
+		},
+		{
+			"ImportPath": "github.com/astaxie/beego/grace",
+			"Comment": "v1.10.1-34-g833f54d",
+			"Rev": "833f54d818237272dffbb9f053227bebe0957ec7"
+		},
+		{
+			"ImportPath": "github.com/astaxie/beego/logs",
+			"Comment": "v1.10.1-34-g833f54d",
+			"Rev": "833f54d818237272dffbb9f053227bebe0957ec7"
+		},
+		{
+			"ImportPath": "github.com/astaxie/beego/session",
+			"Comment": "v1.10.1-34-g833f54d",
+			"Rev": "833f54d818237272dffbb9f053227bebe0957ec7"
+		},
+		{
+			"ImportPath": "github.com/astaxie/beego/session/postgres",
+			"Comment": "v1.10.1-34-g833f54d",
+			"Rev": "833f54d818237272dffbb9f053227bebe0957ec7"
+		},
+		{
+			"ImportPath": "github.com/astaxie/beego/toolbox",
+			"Comment": "v1.10.1-34-g833f54d",
+			"Rev": "833f54d818237272dffbb9f053227bebe0957ec7"
+		},
+		{
+			"ImportPath": "github.com/astaxie/beego/utils",
+			"Comment": "v1.10.1-34-g833f54d",
+			"Rev": "833f54d818237272dffbb9f053227bebe0957ec7"
+		},
+		{
+			"ImportPath": "github.com/gorilla/websocket",
+			"Comment": "v1.4.0-4-g76e4896",
+			"Rev": "76e4896901ef89d253d69b528d3701dd146fe2ae"
+		},
+		{
+			"ImportPath": "github.com/lib/pq",
+			"Comment": "v1.0.0-6-g9eb73ef",
+			"Rev": "9eb73efc1fcc404148b56765b0d3f61d9a5ef8ee"
+		},
+		{
+			"ImportPath": "github.com/lib/pq/oid",
+			"Comment": "v1.0.0-6-g9eb73ef",
+			"Rev": "9eb73efc1fcc404148b56765b0d3f61d9a5ef8ee"
+		},
+		{
+			"ImportPath": "golang.org/x/crypto/acme",
+			"Rev": "e84da0312774c21d64ee2317962ef669b27ffb41"
+		},
+		{
+			"ImportPath": "golang.org/x/crypto/acme/autocert",
+			"Rev": "e84da0312774c21d64ee2317962ef669b27ffb41"
+		},
+		{
+			"ImportPath": "golang.org/x/crypto/bcrypt",
+			"Rev": "e84da0312774c21d64ee2317962ef669b27ffb41"
+		},
+		{
+			"ImportPath": "golang.org/x/crypto/blowfish",
+			"Rev": "e84da0312774c21d64ee2317962ef669b27ffb41"
+		},
+		{
+			"ImportPath": "gopkg.in/yaml.v2",
+			"Comment": "v2.2.1",
+			"Rev": "5420a8b6744d3b0345ab293f6fcba19c978f1183"
+		}
+	]
+}
